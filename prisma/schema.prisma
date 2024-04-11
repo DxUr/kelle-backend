@@ -81,8 +81,11 @@ model Order {
   store       Store     @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems OrderItem[] // Relation to OrderItem model
   isPaid     Boolean   @default(false)
+  name       String    @default("")
   phone      String    @default("")
   address    String    @default("")
+  wilaya     String    @default("")
+  desc       String    @default("")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 

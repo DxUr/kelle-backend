@@ -18,10 +18,10 @@ export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
 ) {
-  const { productIds } = await req.json();
+  const { productIds, name, phone, address, wilaya, desc } = await req.json();
 
-  if (!productIds || productIds.length === 0) {
-    return new NextResponse("Product ids are required", { status: 400 });
+  if (!productIds || productIds.length === 0 || !name || !phone || !wilaya) {
+    return new NextResponse("Bad request", { status: 400 });
   }
 
   const products = await prismadb.product.findMany({
@@ -32,13 +32,14 @@ export async function POST(
     }
   });
 
+  /*
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   products.forEach((product) => {
     line_items.push({
       quantity: 1,
       price_data: {
-        currency: 'USD',
+        currency: 'DZD',
         product_data: {
           name: product.name,
         },
@@ -46,11 +47,17 @@ export async function POST(
       }
     });
   });
+  */
 
   const order = await prismadb.order.create({
     data: {
       storeId: params.storeId,
       isPaid: false,
+      name: name,
+      phone: phone,
+      address: address,
+      wilaya: wilaya,
+      desc: desc,
       orderItems: {
         create: productIds.map((productId: string) => ({
           product: {
@@ -63,6 +70,7 @@ export async function POST(
     }
   });
 
+  /*
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: 'payment',
@@ -76,8 +84,7 @@ export async function POST(
       orderId: order.id
     },
   });
+  */
 
-  return NextResponse.json({ url: session.url }, {
-    headers: corsHeaders
-  });
+  return NextResponse("Order created", { status: 200 });
 };
