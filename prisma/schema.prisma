@@ -84,7 +84,7 @@ model Order {
   name       String    @default("")
   phone      String    @default("")
   address    String    @default("")
-  wilaya     String    @default("")
+  wilaya     Int       @db.SmallInt @default(1)
   desc       String    @default("")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

@@ -7,7 +7,7 @@ export type OrderColumn = {
   name: string;
   phone: string;
   address: string;
-  wilaya: string,
+  wilaya: number,
   desc: string,
   isPaid: boolean;
   totalPrice: string;
