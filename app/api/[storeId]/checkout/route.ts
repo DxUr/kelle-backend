@@ -86,5 +86,5 @@ export async function POST(
   });
   */
 
-  return NextResponse("Order created", { status: 200 });
+  return new NextResponse("Order created", { status: 200 });
 };
