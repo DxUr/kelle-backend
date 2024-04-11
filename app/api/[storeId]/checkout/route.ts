@@ -56,7 +56,7 @@ export async function POST(
       name: name,
       phone: phone,
       address: address,
-      wilaya: wilaya,
+      wilaya: Number(wilaya),
       desc: desc,
       orderItems: {
         create: productIds.map((productId: string) => ({
