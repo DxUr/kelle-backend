@@ -20,7 +20,7 @@ export async function POST(
 ) {
   const { productIds, name, phone, address, wilaya, desc } = await req.json();
 
-  if (!productIds || productIds.length === 0 || !name || !phone || !wilaya) {
+  if (!productIds || productIds.length === 0 || !name || !phone || !wilaya || parseInt(wilaya) < 1 || parseInt(wilaya) > 58 || !address || !desc) {
     return new NextResponse("Bad request", { status: 400 });
   }
 
@@ -56,7 +56,7 @@ export async function POST(
       name: name,
       phone: phone,
       address: address,
-      wilaya: Number(wilaya),
+      wilaya: parseInt(wilaya),
       desc: desc,
       orderItems: {
         create: productIds.map((productId: string) => ({
